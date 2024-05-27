@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """handles all default RESTFul API actions"""
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
@@ -60,4 +60,3 @@ def link_amenity_to_place(place_id, amenity_id):
         place.amenity_ids.append(amenity_id)
     storage.save()
     return jsonify(amenity.to_dict()), 201
-
