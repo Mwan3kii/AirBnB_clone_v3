@@ -2,7 +2,8 @@
 """handles all default RESTFul API actions"""
 from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
-from models import storage, City, Place, User
+from models import storage
+from models import City, Place, User
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
