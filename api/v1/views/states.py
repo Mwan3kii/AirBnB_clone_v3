@@ -39,9 +39,10 @@ def create_state():
     """Creates state using post"""
     if not request.json:
         abort(400, "Not a JSON")
+    data = request.get_json()
     if 'name' not in request.json:
         abort(400, "Missing name")
-    state = State(**request.json)
+    state = State(data)
     state.save()
     return jsonify(state.to_dict()), 201
 
@@ -54,9 +55,10 @@ def update_state(state_id):
         abort(404)
     if not request.json:
         abort(400, "Not a JSON")
-    request_data = request.get_json()
-    for key, value in request_data.items():
-        if key not in ('id', 'created_at', 'updated_at'):
+    data = request.get_json()
+    ignored = ['id', 'created_at', 'updated_at']
+    for key, value in data.items():
+        if key not in ignored:
             setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict())
