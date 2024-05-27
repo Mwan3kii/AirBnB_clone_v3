@@ -28,7 +28,8 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
-        self.password = hash_password(password)
+        if 'password' in kwargs:
+            self.password = kwargs['password']
 
     @property
     def password(self):
@@ -36,4 +37,4 @@ class User(BaseModel, Base):
 
     @password.setter
     def password(self, value):
-        self._password = hash_password(value)
+        self._password = hashlib.md5(value.encode()).hexdigest()
